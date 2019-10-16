@@ -23,7 +23,7 @@ void call(Map args = [:]) {
     if (args.image_ver < '18.4.0') {
         pkgsrc_arch = 'multiarch';
     }
-    String labels = "!platform:true && image_ver:${args.image_ver} && pkgsrc_arch:${pkgsrc_arch} && pi:${pi} && jenkins_agent:${args.jenkins_agent}";
+    String labels = "!platform:true && image_ver:${args.image_ver} && pkgsrc_arch:${pkgsrc_arch} && pi:${args.pi} && jenkins_agent:${args.jenkins_agent}";
     echo "joyent common labels: ${labels}";
     return labels;
 }
