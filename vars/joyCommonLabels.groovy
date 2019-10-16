@@ -10,7 +10,7 @@
 /**
  
 */
-void call(String img_ver, String pi = '20151126T062538Z', String jenkins_agent = '2') {
+void call(String img_ver = "18.4.1", String pi = '20151126T062538Z', String jenkins_agent = '2') {
     // example: '!platform:true && image_ver:18.4.0 && pkgsrc_arch:x86_64 && pi:20151126T062538Z && jenkins_agent:2'
     String pkgsrc_arch = 'x86_64';
     if (img_ver < '18.4.0') {
