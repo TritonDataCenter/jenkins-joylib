@@ -16,5 +16,7 @@ void call(String img_ver, String pi = '20151126T062538Z', String jenkins_agent =
     if (img_ver < '18.4.0') {
         pkgsrc_arch = 'multiarch';
     }
-    return  "!platform:true && image_ver:${img_ver} && pkgsrc_arch:${pkgsrc_arch} && pi:${pi} && jenkins_agent:${jenkins_agent}"
+    String labels = "!platform:true && image_ver:${img_ver} && pkgsrc_arch:${pkgsrc_arch} && pi:${pi} && jenkins_agent:${jenkins_agent}";
+    echo "joyent common labels: ${labels}";
+    return labels;
 }
