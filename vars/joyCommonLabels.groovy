@@ -10,20 +10,20 @@
 /**
 
 */
-//void call(String img_ver = "18.4.1", String pi = '20151126T062538Z', String jenkins_agent = '2') {
+//void call(String image_ver = "18.4.1", String pi = '20151126T062538Z', String jenkins_agent = '2') {
 void call(Map args = [:]) {
     // example: '!platform:true && image_ver:18.4.0 && pkgsrc_arch:x86_64 && pi:20151126T062538Z && jenkins_agent:2'
     if (! args.image_ver) {
-        throw new Exception("missing required parameter img_ver");
+        throw new Exception("missing required parameter image_ver");
     }
     args.pi = args.pi ?: '20151126T062538Z';
     args.jenkins_agent = args.jenkins_agent ?: '2';
 
     String pkgsrc_arch = 'x86_64';
-    if (args.img_ver < '18.4.0') {
+    if (args.image_ver < '18.4.0') {
         pkgsrc_arch = 'multiarch';
     }
-    String labels = "!platform:true && image_ver:${args.img_ver} && pkgsrc_arch:${pkgsrc_arch} && pi:${pi} && jenkins_agent:${args.jenkins_agent}";
+    String labels = "!platform:true && image_ver:${args.image_ver} && pkgsrc_arch:${pkgsrc_arch} && pi:${pi} && jenkins_agent:${args.jenkins_agent}";
     echo "joyent common labels: ${labels}";
     return labels;
 }
