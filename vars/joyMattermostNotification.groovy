@@ -28,7 +28,7 @@ void call(String channel = 'jenkins') {
         echo "[joyMattermostNotification] guessed ${branch}";
     }
 
-    if (branch =~ 'master' || (branch =~ '^release.*').matches()) {
+    if (branch ==~ 'master' || branch ==~ '^release.*') {
         mattermostSend(
             channel: channel,
             color: "${if (currentBuild.currentResult == 'SUCCESS') 'good' else 'danger'}",
