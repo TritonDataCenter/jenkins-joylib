@@ -21,7 +21,13 @@ void call(String channel = 'jenkins') {
         emoji = STATUS_MAP[currentBuild.currentResult];
     }
 
-    if (env.BRANCH_NAME == 'master' || (env.BRANCH_NAME =~ 'release.*').matches()) {
+    String branch = env.BRANCH_NAME;
+    if (!branch) {
+        echo "[joyMattermostNotification] env.BRANCH_NAME=${env.BRANCH_NAME}, trying to guess checked out branch";
+        branch = sh(returnStdout: true, script: 'git symbolic-ref HEAD | awk -F/ "{print $3}"');
+    }
+
+    if (branch == 'master' || (branch =~ 'release.*').matches()) {
         mattermostSend(
             channel: channel,
             color: "${if (currentBuild.currentResult == 'SUCCESS') 'good' else 'danger'}",
