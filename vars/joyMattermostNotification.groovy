@@ -26,7 +26,6 @@ void call(String channel = 'jenkins') {
         echo "[joyMattermostNotification] env.BRANCH_NAME=${env.BRANCH_NAME}, trying to guess real branch...";
         branch = sh(returnStdout: true, script: 'git symbolic-ref HEAD | cut -d / -f 3').trim();
         echo "[joyMattermostNotification] guessed ${branch}";
-        echo "wtf ${branch.getClass()} ${branch.length()} ${branch}";        
     }
 
     if (branch == 'master' || branch ==~ '^release.*') {
