@@ -10,7 +10,6 @@
 /**
 
 */
-//void call(String image_ver = "18.4.1", String pi = '20151126T062538Z', String jenkins_agent = '2') {
 void call(Map args = [:]) {
     // example: '!platform:true && image_ver:18.4.0 && pkgsrc_arch:x86_64 && pi:20151126T062538Z && jenkins_agent:2'
     if (! args.image_ver) {
@@ -24,6 +23,6 @@ void call(Map args = [:]) {
         pkgsrc_arch = 'multiarch';
     }
     String labels = "!platform:true && image_ver:${args.image_ver} && pkgsrc_arch:${pkgsrc_arch} && pi:${args.pi} && jenkins_agent:${args.jenkins_agent}";
-    echo "joyent common labels: ${labels}";
+    echo "joyent common labels computed: ${labels}";
     return labels;
 }
