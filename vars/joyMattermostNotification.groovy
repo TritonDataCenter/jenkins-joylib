@@ -23,12 +23,22 @@ void call(String channel = 'jenkins') {
 
     String branch = env.BRANCH_NAME;
     if (!branch) {
-        echo "[joyMattermostNotification] env.BRANCH_NAME=${env.BRANCH_NAME}, trying to guess checked out branch...";
+        echo "[joyMattermostNotification] env.BRANCH_NAME=${env.BRANCH_NAME}, trying to guess real branch...";
         branch = sh(returnStdout: true, script: 'git symbolic-ref HEAD | cut -d / -f 3');
         echo "[joyMattermostNotification] guessed ${branch}";
     }
 
-    if (branch == 'master' || (branch =~ 'release.*').matches()) {
+    // wtf
+    echo branch;
+    if (branch == 'master') {
+        echo "==t";
+    }
+    if (branch == 'master' || false) {
+        echo "==tt";
+    }
+    
+    
+    if (branch == 'master' || (branch =~ '^release.*').matches()) {
         mattermostSend(
             channel: channel,
             color: "${if (currentBuild.currentResult == 'SUCCESS') 'good' else 'danger'}",
