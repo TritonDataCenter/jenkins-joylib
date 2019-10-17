@@ -24,15 +24,15 @@ void call(String channel = 'jenkins') {
     String branch = env.BRANCH_NAME;
     if (!branch) {
         echo "[joyMattermostNotification] env.BRANCH_NAME=${env.BRANCH_NAME}, trying to guess real branch...";
-        branch = sh(returnStdout: true, script: 'git symbolic-ref HEAD | cut -d / -f 3');
+        branch = sh(returnStdout: true, script: 'git symbolic-ref HEAD | cut -d / -f 3').trim();
         echo "[joyMattermostNotification] guessed ${branch}";
     }
 
-    if (branch ==~ 'master' || branch ==~ '^release.*') {
+    if (branch == 'master' || branch ==~ '^release.*') {
         mattermostSend(
             channel: channel,
             color: "${if (currentBuild.currentResult == 'SUCCESS') 'good' else 'danger'}",
-            message: "${emoji} ${env.JOB_NAME} - #${env.BUILD_NUMBER} ${currentBuild.currentResult} after ${currentBuild.durationString.replace(' and counting', '')} (<${currentBuild.absoluteUrl}|Open>)",
+            message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} ${emoji} ${currentBuild.currentResult} after ${currentBuild.durationString.replace(' and counting', '')} (<${currentBuild.absoluteUrl}|Open>)",
             text: "${currentBuild.description}")
     } else {
         echo "[joyMattermostNotification] not in whitelisted branch, suppressing notification"
