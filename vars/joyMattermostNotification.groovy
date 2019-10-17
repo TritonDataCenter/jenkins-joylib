@@ -23,8 +23,9 @@ void call(String channel = 'jenkins') {
 
     String branch = env.BRANCH_NAME;
     if (!branch) {
-        echo "[joyMattermostNotification] env.BRANCH_NAME=${env.BRANCH_NAME}, trying to guess checked out branch";
+        echo "[joyMattermostNotification] env.BRANCH_NAME=${env.BRANCH_NAME}, trying to guess checked out branch...";
         branch = sh(returnStdout: true, script: 'git symbolic-ref HEAD | awk -F/ "{print $3}"');
+        echo "[joyMattermostNotification] guessed ${branch}";
     }
 
     if (branch == 'master' || (branch =~ 'release.*').matches()) {
