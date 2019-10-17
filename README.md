@@ -29,7 +29,7 @@ pipeline {
 Becomes
 
 ```groovy
-@Library('jerkins-extensions@tag_version') _
+@Library('jenkins-joylib@tag_version') _
 
 pipeline {
     agent {
