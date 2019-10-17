@@ -8,8 +8,9 @@
 
 
 /**
- 
-*/
+ * Invokes multiple engbld targets to both build and image, and upload it to an
+ * image server.
+ */
 void call() {
     sh('''
 set -o errexit

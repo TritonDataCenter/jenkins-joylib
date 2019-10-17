@@ -8,7 +8,8 @@
 
 
 /**
-
+ * Notify the jenkins mattermost channel, only on master/release branches, and
+ * don't neglect colors or emoji.
 */
 void call(Map args = [:]) {
     String channel = args.channel ?: 'jenkins';
