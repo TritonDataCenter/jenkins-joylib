@@ -10,8 +10,9 @@
 /**
 
 */
-void call(String channel = 'jenkins') {
-    echo "call"
+void call(Map args = [:]) {
+    String channel = args.channel ?: 'jenkins';
+
     // addapted from https://github.com/jenkinsci/mattermost-plugin/blob/mattermost-2.7.0/src/main/java/jenkins/plugins/mattermost/ActiveNotifier.java
     def STATUS_MAP = ['SUCCESS': ':white_check_mark:', 'FAILURE': 'no_entry_sign:',
                       'UNSTABLE': ':no_entry_sign:', 'ABORTED': ':warning:',
@@ -35,6 +36,6 @@ void call(String channel = 'jenkins') {
             message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} ${emoji} ${currentBuild.currentResult} after ${currentBuild.durationString.replace(' and counting', '')} (<${currentBuild.absoluteUrl}|Open>)",
             text: "${currentBuild.description}")
     } else {
-        echo "[joyMattermostNotification] not in whitelisted branch, suppressing notification"
+        echo "[joyMattermostNotification] not in master or release branch, suppressing notification"
     }
 }
