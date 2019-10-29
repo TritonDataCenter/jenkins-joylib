@@ -22,9 +22,12 @@ void call(Map args = [:]) {
     args.pi = args.pi ?: '20151126T062538Z';
     args.jenkins_agent = args.jenkins_agent ?: '2';
 
-    String pkgsrc_arch = 'x86_64';
-    if (args.image_ver < '18.4.0') {
-        pkgsrc_arch = 'multiarch';
+    String pkgsrc_arch = args.pkgsrc_arch;
+    if (! pkgsrc_arch) {
+        pkgsrc_arch = 'x86_64';
+        if (args.image_ver < '18.4.0') {
+            pkgsrc_arch = 'multiarch';
+        }
     }
     String labels = "!platform:true && image_ver:${args.image_ver} && pkgsrc_arch:${pkgsrc_arch} && pi:${args.pi} && jenkins_agent:${args.jenkins_agent}";
     echo "joyent common labels computed: ${labels}";
