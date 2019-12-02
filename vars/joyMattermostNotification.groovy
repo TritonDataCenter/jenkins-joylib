@@ -37,13 +37,13 @@ void call(Map args = [:]) {
         mmText = branch;
     }
 
-    if (branch == 'master' || branch ==~ '^release.*') {
+    if (branch == 'master' || branch == 'mantav1' || branch ==~ '^release.*') {
         mattermostSend(
             channel: channel,
             color: "${if (currentBuild.currentResult == 'SUCCESS') 'good' else 'danger'}",
             message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} ${emoji} ${currentBuild.currentResult} after ${currentBuild.durationString.replace(' and counting', '')} (<${currentBuild.absoluteUrl}|Open>)",
             text: mmText)
     } else {
-        echo "[joyMattermostNotification] not in master or release branch, suppressing notification"
+        echo "[joyMattermostNotification] not in master, mantav1, or release-YYYYMMDD branch: suppressing notification"
     }
 }
