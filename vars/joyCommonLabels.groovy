@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
- * Copyright 2019 Joyent, Inc.
+ * Copyright 2020 Joyent, Inc.
  */
 
 
@@ -19,7 +19,7 @@ void call(Map args = [:]) {
     if (! args.image_ver) {
         throw new Exception("missing required parameter image_ver");
     }
-    args.pi = args.pi ?: '20151126T062538Z';
+    args.pi = args.pi ?: '20181206T011455Z';
     args.jenkins_agent = args.jenkins_agent ?: '2';
 
     String pkgsrc_arch = args.pkgsrc_arch;
