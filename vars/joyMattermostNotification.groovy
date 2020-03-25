@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
- * Copyright 2019 Joyent, Inc.
+ * Copyright 2020 Joyent, Inc.
  */
 
 
@@ -38,12 +38,14 @@ void call(Map args = [:]) {
         mmText = branch;
     }
 
+    // Callers can include a comment which is useful to differentiate
+    // notifications from different pipeline stages, but can be used for any
+    // purpose.
     if (comment) {
         mmText += ' ' + comment;
     }
 
-    // XXX timf debug here to force a notification
-    if (true || branch == 'master' || branch == 'mantav1' || branch ==~ '^release.*') {
+    if (branch == 'master' || branch == 'mantav1' || branch ==~ '^release.*') {
         mattermostSend(
             channel: channel,
             color: "${if (currentBuild.currentResult == 'SUCCESS') 'good' else 'danger'}",
