@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
- * Copyright 2019 Joyent, Inc.
+ * Copyright 2020 Joyent, Inc.
  */
 
 
@@ -13,6 +13,7 @@
 */
 void call(Map args = [:]) {
     String channel = args.channel ?: 'jenkins';
+    String comment = args.comment ?: '';
 
     // addapted from https://github.com/jenkinsci/mattermost-plugin/blob/mattermost-2.7.0/src/main/java/jenkins/plugins/mattermost/ActiveNotifier.java
     def STATUS_MAP = ['SUCCESS': ':white_check_mark:', 'FAILURE': 'no_entry_sign:',
@@ -35,6 +36,13 @@ void call(Map args = [:]) {
         mmText = currentBuild.description;
     } else if (branch) {
         mmText = branch;
+    }
+
+    // Callers can include a comment which is useful to differentiate
+    // notifications from different pipeline stages, but can be used for any
+    // purpose.
+    if (comment) {
+        mmText += ' ' + comment;
     }
 
     if (branch == 'master' || branch == 'mantav1' || branch ==~ '^release.*') {
