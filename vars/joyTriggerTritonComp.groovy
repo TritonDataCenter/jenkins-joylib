@@ -6,7 +6,7 @@
  * Copyright 2020 Joyent, Inc.
  */
 
-def AGENTS = [
+AGENTS = [
     "sdc-agents-core",
     "triton-cmon-agent",
     "sdc-cn-agent",
