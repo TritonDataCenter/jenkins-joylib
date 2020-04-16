@@ -24,18 +24,22 @@ void call(Map args = [:]) {
     }
 
     if (args.whenBranch != env.BRANCH_NAME) {
-        echo "Skipping build due to mismatched whenBranch"
-        return
+        echo "Skipping build due to mismatched whenBranch";
+        return;
     }
 
     def userIdCause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause');
     if (!userIdCause) {
-        echo "Build of " + args.repo + " was not triggered by a user, skipping."
-        return
+        echo "Build of " + args.repo + " was not triggered by a user, skipping.";
+        return;
     }
 
-    if (env.COMPONENTS == "" ||
-        env.COMPONENTS =~ ".*" + args.repo + ".*")  {
+    /*
+     * We only build a given component if no $COMPONENTS parameter was set,
+     * or if this repository was included in the value.
+     */
+    def components = env.COMPONENTS.split(" ");
+    if (env.COMPONENTS == "" || components.contains(args.repo))  {
         if (args.isAgentBuild) {
             build(
                 job: "joyent-org/" + args.repo + "/" + args.compBranch,
@@ -46,11 +50,11 @@ void call(Map args = [:]) {
                         name: 'TRIGGER_AGENTS_INSTALLER_BUILD',
                         value: false,
                     ]
-                ])
+                ]);
         } else {
             build(
                 job: "joyent-org/" + args.repo + "/" + args.compBranch,
-                wait: true)
+                wait: true);
         }
     } else {
         echo "Skipping build of " + args.repo;
