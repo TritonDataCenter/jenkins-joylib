@@ -6,6 +6,18 @@
  * Copyright 2020 Joyent, Inc.
  */
 
+def AGENTS = [
+    "sdc-agents-core",
+    "triton-cmon-agent",
+    "sdc-cn-agent",
+    "sdc-net-agent",
+    "sdc-vm-agent",
+    "sdc-hagfish-watcher",
+    "sdc-smart-login",
+    "sdc-amon",
+    "sdc-firewaller-agent",
+    "sdc-config-agent",
+]
 
 /**
  * Triggers a joyent-org build of args.repo on args.compBranch if we're on the
@@ -31,7 +43,8 @@ void call(Map args = [:]) {
         return;
     }
 
-    def userIdCause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause');
+    def userIdCause = currentBuild.getBuildCauses(
+        'hudson.model.Cause$UserIdCause');
     if (!userIdCause) {
         echo "Build of " + args.repo + " was not triggered by a user, skipping.";
         return;
@@ -42,8 +55,12 @@ void call(Map args = [:]) {
      * or if this repository was included in the value.
      */
     def components = env.COMPONENTS.split(" ");
-    if (env.COMPONENTS == "" || components.contains(args.repo))  {
-        if (args.isAgentBuild) {
+    if (env.COMPONENTS == "" || args.repo in components)  {
+        if (args.repo in AGENTS) {
+            /*
+             * We don't want an automatic build of sdc-agents-installer for
+             * every agent. We only need to build that once.
+             */
             build(
                 job: "joyent-org/" + args.repo + "/" + args.compBranch,
                 wait: true,
@@ -59,7 +76,29 @@ void call(Map args = [:]) {
                 job: "joyent-org/" + args.repo + "/" + args.compBranch,
                 wait: true);
         }
+    } else if (args.repo == "sdc-agents-installer" &&
+                shouldBuildSDCAgentsInstaller(components)) {
+        echo "Building sdc-agents-installer since COMPONENTS included an agent";
+        build(
+            job: "joyent-org/" + args.repo + "/" + args.compBranch,
+            wait: true);
     } else {
         echo "Skipping build of " + args.repo;
     }
+}
+
+boolean shouldBuildSDCAgentsInstaller(components) {
+    boolean includesAgent = false;
+    // No components were passed, which means build everything
+    if (components.size() == 0) {
+        return true;
+    }
+    // If any agents were in the list of components to be built
+    // then we need to build sdc-agents-installer
+    for (agent in AGENTS) {
+        if (agent in components) {
+            includesAgent = true;
+        }
+    }
+    return includesAgent;
 }
