@@ -47,7 +47,7 @@ void call(Map args = [:]) {
             build(
                 job: "joyent-org/" + args.repo + "/" + args.compBranch,
                 wait: true,
-                params: [
+                parameters: [
                     [
                         $class: 'BooleanParameterValue',
                         name: 'TRIGGER_AGENTS_INSTALLER_BUILD',
