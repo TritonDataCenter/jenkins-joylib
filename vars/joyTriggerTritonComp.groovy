@@ -36,9 +36,22 @@ void call(Map args = [:]) {
 
     if (env.COMPONENTS == "" ||
         env.COMPONENTS =~ ".*" + args.repo + ".*")  {
+        if (args.isAgentBuild) {
+            build(
+                job: "joyent-org/" + args.repo + "/" + args.compBranch,
+                wait: true,
+                params: [
+                    [
+                        $class: 'BooleanParameterValue',
+                        name: 'TRIGGER_AGENTS_INSTALLER_BUILD',
+                        value: false,
+                    ]
+                ])
+        } else {
             build(
                 job: "joyent-org/" + args.repo + "/" + args.compBranch,
                 wait: true)
+        }
     } else {
         echo "Skipping build of " + args.repo;
     }
