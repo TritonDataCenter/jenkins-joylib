@@ -29,7 +29,7 @@ void call(Map args = [:]) {
     }
 
     def userIdCause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause');
-    if (userIdCause == null) {
+    if (!userIdCause) {
         echo "Build of " + args.repo + " was not triggered by a user, skipping."
         return
     }
