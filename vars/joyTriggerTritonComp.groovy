@@ -13,14 +13,17 @@
  * variable is set, we only build args.repo if it's listed in that variable.
  */
 void call(Map args = [:]) {
-    if (! args.repo) {
-        throw new Exception("missing requires parameter repo");
+    if (!args.repo) {
+        throw new Exception(
+            "missing requires parameter repo: " + args.toString());
     }
-    if (! args.compBranch) {
-        throw new Exception("missing required parameter compBranch");
+    if (!args.compBranch) {
+        throw new Exception(
+            "missing required parameter compBranch: " +  args.toString());
     }
     if (!args.whenBranch) {
-        throw new Exception("missing required parameter whenBranch");
+        throw new Exception(
+            "missing required parameter whenBranch: " + args.toString());
     }
 
     if (args.whenBranch != env.BRANCH_NAME) {
