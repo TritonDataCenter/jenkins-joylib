@@ -6,7 +6,8 @@
  * Copyright 2020 Joyent, Inc.
  */
 
-AGENTS = [
+@groovy.transform.Field
+def AGENTS = [
     "sdc-agents-core",
     "triton-cmon-agent",
     "sdc-cn-agent",
