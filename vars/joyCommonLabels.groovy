@@ -20,7 +20,7 @@ void call(Map args = [:]) {
         throw new Exception("missing required parameter image_ver");
     }
     args.pi = args.pi ?: '20181206T011455Z';
-    args.jenkins_agent = args.jenkins_agent ?: '2';
+    args.jenkins_agent = args.jenkins_agent ?: '3';
 
     String pkgsrc_arch = args.pkgsrc_arch;
     if (! pkgsrc_arch) {
