@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
- * Copyright 2020 Joyent, Inc.
+ * Copyright 2021 Joyent, Inc.
  */
 
 
@@ -15,7 +15,7 @@ void call(Map args = [:]) {
     String channel = args.channel ?: 'jenkins';
     String comment = args.comment ?: '';
 
-    // addapted from https://github.com/jenkinsci/slack-plugin/blob/slack-2.48/src/main/java/jenkins/plugins/slack/ActiveNotifier.java
+    // adapted from https://github.com/jenkinsci/slack-plugin/blob/slack-2.48/src/main/java/jenkins/plugins/slack/ActiveNotifier.java
     def STATUS_MAP = ['SUCCESS': ':white_check_mark:', 'FAILURE': 'no_entry_sign:',
                       'UNSTABLE': ':no_entry_sign:', 'ABORTED': ':warning:',
                       'NOT_BUILT': ':warning:', 'UNSTABLE': ':warning:'];
