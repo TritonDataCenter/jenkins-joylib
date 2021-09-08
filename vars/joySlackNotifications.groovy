@@ -49,8 +49,7 @@ void call(Map args = [:]) {
         slackSend(
             channel: channel,
             color: "${if (currentBuild.currentResult == 'SUCCESS') 'good' else 'danger'}",
-            message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} ${emoji} ${currentBuild.currentResult} after ${currentBuild.durationString.replace(' and counting', '')} (<${currentBuild.absoluteUrl}|Open>)",
-            text: slackText)
+            message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} ${emoji} ${currentBuild.currentResult} after ${currentBuild.durationString.replace(' and counting', '')} (<${currentBuild.absoluteUrl}|Open>)\n ${slackText}")
     } else {
         echo "[joySlackNotification] not in master, mantav1, or release-YYYYMMDD branch: suppressing notification"
     }
