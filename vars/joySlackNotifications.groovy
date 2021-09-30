@@ -16,7 +16,7 @@ void call(Map args = [:]) {
     String comment = args.comment ?: '';
 
     // adapted from https://github.com/jenkinsci/slack-plugin/blob/slack-2.48/src/main/java/jenkins/plugins/slack/ActiveNotifier.java
-    def STATUS_MAP = ['SUCCESS': ':white_check_mark:', 'FAILURE': 'no_entry_sign:',
+    def STATUS_MAP = ['SUCCESS': ':white_check_mark:', 'FAILURE': ':no_entry_sign:',
                       'UNSTABLE': ':no_entry_sign:', 'ABORTED': ':warning:',
                       'NOT_BUILT': ':warning:', 'UNSTABLE': ':warning:'];
      String emoji = ':question';
