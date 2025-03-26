@@ -4,15 +4,16 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
  * Copyright 2021 Joyent, Inc.
+ * Copyright 2025 MNX Cloud, Inc.
  */
 
 
 /**
- * Notify the jenkins Slack channel, only on master/release branches, and
+ * Notify the cloud-jenkins Slack channel, only on master/release branches, and
  * don't neglect colors or emoji.
 */
 void call(Map args = [:]) {
-    String channel = args.channel ?: 'jenkins';
+    String channel = args.channel ?: 'cloud-jenkins';
     String comment = args.comment ?: '';
 
     // adapted from https://github.com/jenkinsci/slack-plugin/blob/slack-2.48/src/main/java/jenkins/plugins/slack/ActiveNotifier.java
